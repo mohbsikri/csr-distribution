@@ -3,7 +3,7 @@
 **Version produit :** 1.0.1 · **Version runtime :** 2.8.21  
 **Dépôt :** https://github.com/mohbsikri/csr-distribution — lecture publique, aucune invitation ni authentification Git nécessaire.
 
-> Fichier généré par `build_public.py` (dépôt source). Ne pas l'éditer ici. Droits et composants tiers : [`NOTICE.md`](NOTICE.md).
+> Fichier généré par `build_public.py` (dépôt source). Ne pas l'éditer ici. Licence : MIT ([`LICENSE`](LICENSE)) ; composants tiers : [`NOTICE.md`](NOTICE.md).
 
 CSR transforme des connaissances fragmentées en spécifications validées et maintenables. Il s'installe comme plugin **Claude Code local** (application ou terminal ; pas la version web).
 
@@ -38,4 +38,5 @@ Mise à jour : `claude plugin marketplace update csr-private` puis `claude plugi
 |---|---|
 | [`docs/onboarding/prompt-demarrage.md`](docs/onboarding/prompt-demarrage.md) | Procédure exécutée par Claude : diagnostic, installation, provenance, initialisation |
 | [`docs/onboarding/guide-demarrage.md`](docs/onboarding/guide-demarrage.md) | Guide : prérequis, dossier de travail, mise à jour, migration, dépannage |
-| [`NOTICE.md`](NOTICE.md) | Droits et composants tiers |
+| [`LICENSE`](LICENSE) | Licence MIT du code et de la documentation CSR |
+| [`NOTICE.md`](NOTICE.md) | Portée de la licence et composants tiers (Mermaid, MIT) |

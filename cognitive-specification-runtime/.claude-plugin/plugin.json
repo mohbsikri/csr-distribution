@@ -7,5 +7,6 @@
     "name": "mohbsikri"
   },
   "repository": "https://github.com/mohbsikri/csr-distribution",
-  "homepage": "https://github.com/mohbsikri/csr-distribution"
+  "homepage": "https://github.com/mohbsikri/csr-distribution",
+  "license": "MIT"
 }

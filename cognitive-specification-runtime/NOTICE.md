@@ -2,9 +2,11 @@
 
 ## Code et documentation CSR
 
-© 2026 mohbsikri (propriétaire du dépôt `mohbsikri/csr-distribution`). Tous droits réservés.
+© 2026 mohbsikri.
 
-La mise à disposition publique de ce dépôt **n'est pas une licence open source** : aucune licence (MIT, Apache ou autre) n'est concédée sur le code et la documentation CSR. Les conditions d'utilisation et de réutilisation restent à préciser par l'auteur ; à défaut, seuls les droits que la loi et les conditions d'utilisation de GitHub accordent s'appliquent.
+Le code et la documentation CSR de cette distribution publique sont publiés sous **licence MIT** : texte intégral dans [`LICENSE`](LICENSE) (également embarqué dans le plugin, `cognitive-specification-runtime/LICENSE`). Utilisation, modification, redistribution et usage commercial sont autorisés, à condition de conserver l'avis de copyright et le texte de la licence.
+
+Portée : uniquement le contenu de ce dépôt `mohbsikri/csr-distribution`. Les composants tiers ci-dessous restent sous leur propre licence. Aucun autre dépôt, source privée ou donnée métier n'est couvert ni publié.
 
 Distribution : produit 1.0.1, runtime 2.8.21.
 
