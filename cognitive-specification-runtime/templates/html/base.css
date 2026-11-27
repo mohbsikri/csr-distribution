@@ -1,0 +1,404 @@
+/* ============================================================
+   CSR Base Stylesheet — structural layer
+   Never modify for branding. Use themes/<name>.css for tokens.
+   ============================================================ */
+
+/* --- Reset --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* QW-02: smooth TOC navigation + compensate for sticky draft-banner height */
+html { scroll-behavior: smooth; scroll-padding-top: 50px; }
+
+/* --- Body --- */
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--line-height);
+  color: var(--color-text);
+  background: var(--color-bg);
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg);
+}
+
+/* --- Headings --- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-primary);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-md);
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+h1 { font-size: var(--text-3xl); border-bottom: 3px solid var(--color-primary); padding-bottom: var(--space-sm); }
+h2 { font-size: var(--text-2xl); border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-xs); }
+h3 { font-size: var(--text-xl); }
+h4 { font-size: var(--text-lg); color: var(--color-text); }
+h5, h6 { font-size: var(--text-base); color: var(--color-text-muted); }
+
+p { margin-bottom: var(--space-md); }
+
+a { color: var(--color-accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* --- Inline code --- */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+
+/* --- Code blocks --- */
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-md);
+  overflow-x: auto;
+  margin-bottom: var(--space-md);
+  line-height: 1.5;
+}
+
+pre code { background: none; border: none; padding: 0; font-size: inherit; }
+
+/* --- Lists --- */
+ul, ol { padding-left: var(--space-lg); margin-bottom: var(--space-md); }
+li { margin-bottom: var(--space-xs); }
+
+/* --- Tables --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--space-lg);
+  font-size: var(--text-sm);
+}
+
+thead th {
+  background: var(--color-table-header-bg);
+  color: var(--color-table-header-text);
+  font-weight: 600;
+  padding: var(--space-sm) var(--space-md);
+  text-align: left;
+}
+
+tbody tr:nth-child(even) { background: var(--color-surface); }
+tbody tr:hover { background: var(--color-hover-bg); }   /* OUT-RT-01 */
+/* QW-03: prevent long paths/URLs from overflowing table cells */
+td, th { border: 1px solid var(--color-border); padding: var(--space-xs) var(--space-md); vertical-align: top; overflow-wrap: anywhere; }
+
+hr { border: none; border-top: 1px solid var(--color-border); margin: var(--space-xl) 0; }
+
+/* --- Cover page --- */
+.cover-page {
+  padding: var(--space-xl) 0;
+  border-bottom: 3px solid var(--color-primary);
+  margin-bottom: var(--space-xl);
+  page-break-after: always;
+}
+
+.cover-logo { max-height: 60px; max-width: 200px; margin-bottom: var(--space-xl); display: block; }
+
+.cover-doc-type {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-sm);
+}
+
+.cover-title {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.15;
+  margin-bottom: var(--space-md);
+  border: none;
+  padding: 0;
+  margin-top: 0;
+}
+
+.cover-subtitle { font-size: var(--text-lg); color: var(--color-text-muted); margin-bottom: var(--space-xl); }
+
+.cover-meta { width: auto; border-collapse: collapse; font-size: var(--text-sm); }
+.cover-meta td { padding: 3px var(--space-md) 3px 0; border: none; vertical-align: top; }
+.cover-meta td:first-child { color: var(--color-text-muted); font-weight: 600; width: 150px; white-space: nowrap; }
+
+/* --- Status badges --- */
+.badge {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge-open      { background: var(--badge-open-bg);    color: var(--badge-open-text); }
+.badge-baselined { background: var(--badge-ok-bg);      color: var(--badge-ok-text); }
+.badge-pending   { background: var(--badge-pending-bg); color: var(--badge-pending-text); }
+.badge-fail      { background: var(--badge-fail-bg);    color: var(--badge-fail-text); }
+.badge-pass      { background: var(--badge-ok-bg);      color: var(--badge-ok-text); }
+.badge-blocked   { background: var(--badge-fail-bg);    color: var(--badge-fail-text); }
+
+/* --- GAP block (section incomplete) --- */
+.gap-block {
+  background: var(--gap-bg);
+  border: 2px solid var(--gap-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-md);
+  margin: var(--space-md) 0 var(--space-lg) 0;
+}
+
+.gap-block-header {
+  font-weight: 700;
+  font-size: var(--text-sm);
+  color: var(--gap-text);
+  margin-bottom: var(--space-sm);
+}
+
+.gap-block ul { font-size: var(--text-sm); color: var(--gap-detail); padding-left: var(--space-lg); margin: 0; }
+.gap-block li { margin-bottom: 2px; }
+
+/* --- Mermaid --- */
+pre.mermaid {
+  background: transparent;
+  border: none;
+  padding: var(--space-md);
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+
+/* QW-04: constrain rendered Mermaid SVG to container width */
+pre.mermaid svg { max-width: 100%; height: auto; }
+
+.diagram-caption {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: calc(-1 * var(--space-sm));
+  margin-bottom: var(--space-lg);
+  font-style: italic;
+}
+
+/* --- TOC --- */
+.toc {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  page-break-after: always;
+}
+
+.toc h2 { border: none; margin-top: 0; font-size: var(--text-lg); margin-bottom: var(--space-md); }
+.toc ol { padding-left: var(--space-md); }
+.toc li { margin-bottom: var(--space-xs); font-size: var(--text-sm); }
+.toc a { color: var(--color-text); }
+.toc a:hover { color: var(--color-accent); }
+/* E2: the TOC is rebuilt at export from the headings actually present, so it
+   now carries sub-entries for h3. Indented rather than nested, because a flat
+   <ol> keeps the numbering continuous and the markup trivial to regenerate. */
+.toc li.toc-sub {
+  margin-inline-start: var(--space-lg);
+  list-style-type: lower-alpha;
+  color: var(--color-text-muted);
+}
+
+/* --- Blockquote (info callouts) --- */
+blockquote {
+  border-left: 4px solid var(--color-accent);
+  background: var(--color-callout-bg);   /* OUT-RT-01 */
+  padding: var(--space-sm) var(--space-md);
+  margin: var(--space-md) 0;
+  font-size: var(--text-sm);
+  color: var(--color-callout-text);      /* OUT-RT-01 */
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+blockquote p { margin: 0; }
+
+/* --- Draft banner (DQM-1) --- */
+.draft-banner {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--draft-bg);
+  color: var(--draft-text);
+  text-align: center;
+  padding: var(--space-sm) var(--space-lg);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border-block-end: 2px solid var(--draft-border);
+  box-shadow: 0 2px 6px var(--draft-shadow);
+}
+
+/* --- Print --- */
+@media print {
+  /* E1: force the LIGHT palette on paper.
+     OUT-RT-05 asks for `print-color-adjust: exact` so badges keep their meaning
+     in a PDF. The moment a dark palette exists, that instruction becomes a trap:
+     a reader whose system is dark would print a dark page — wasting toner and
+     producing an unreadable document. Re-declaring the tokens here costs nothing
+     and makes the paper output independent of the screen the reader is using. */
+  :root {
+    --color-text:          #111827;
+    --color-text-muted:    #374151;
+    --color-bg:            #FFFFFF;
+    --color-surface:       #F9FAFB;
+    --color-border:        #9CA3AF;
+    --color-primary:       #1E3A5F;
+    --color-accent:        #1E3A5F;
+    --color-callout-bg:    #F3F4F6;
+    --color-callout-text:  #111827;
+    --color-table-header-bg:   #1E3A5F;
+    --color-table-header-text: #FFFFFF;
+    --badge-open-bg: #DBEAFE;    --badge-open-text: #1E40AF;
+    --badge-ok-bg: #D1FAE5;      --badge-ok-text: #065F46;
+    --badge-pending-bg: #FEF3C7; --badge-pending-text: #92400E;
+    --badge-fail-bg: #FEE2E2;    --badge-fail-text: #991B1B;
+    --gap-bg: #FFFBEB; --gap-border: #F59E0B; --gap-text: #92400E; --gap-detail: #78350F;
+  }
+  body { max-width: 100%; padding: 0; font-size: 10pt; color: #000; background: #fff; }
+  /* OUT-RT-05: preserve badge and status colors in print/PDF */
+  * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .skip-link { display: none; }
+  /* A scroll container cannot scroll on paper — let the table print in full. */
+  .table-scroll { overflow: visible; border: none; }
+  .cover-page { page-break-after: always; }
+  .toc { page-break-after: always; }
+  h2, h3 { page-break-after: avoid; }
+  table, .gap-block { page-break-inside: avoid; }
+  a { color: #000; }
+  thead { display: table-header-group; }
+  pre { white-space: pre-wrap; }
+  .draft-banner { position: static; box-shadow: none; }
+}
+
+/* --- Responsive --- */
+@media (max-width: 700px) {
+  body { padding: var(--space-md); }
+  h1 { font-size: var(--text-2xl); }
+  h2 { font-size: var(--text-xl); }
+}
+
+/* ============================================================
+   Accessibility layer (E1, 2026-11-01)
+
+   A specification is read on a phone, printed, enlarged, and navigated
+   by keyboard. None of that was supported. Everything below is
+   structural and audience-independent, so it belongs in base.css and
+   not in a theme: a custom charte changes colours, never whether the
+   document can be reached without a mouse.
+   ============================================================ */
+
+/* Skip link — the first focusable element, visible only when focused.
+   Without it, keyboard navigation starts at the top of a long document
+   and has to traverse the whole table of contents to reach the text. */
+.skip-link {
+  position: absolute;
+  inset-block-start: -100vh;
+  inset-inline-start: var(--space-md);
+  z-index: 100;
+  background: var(--color-primary);
+  color: var(--color-bg);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--border-radius);
+  text-decoration: none;
+}
+.skip-link:focus { inset-block-start: var(--space-sm); }
+
+/* Visible focus everywhere. The browser default disappears against
+   several of the surface colours used here. */
+a:focus-visible,
+.skip-link:focus-visible,
+.table-scroll:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Anchor targets must clear the sticky draft banner. `scroll-padding-top`
+   on <html> covers in-page links; `scroll-margin` covers a direct load
+   on a #fragment, which the other does not. */
+[id] { scroll-margin-block-start: 60px; }
+
+/* Wide tables scroll inside their own region rather than forcing the
+   page to scroll sideways. Announced as a region and made focusable,
+   so a keyboard user can actually reach and scroll it — an unfocusable
+   overflow container is unreachable without a mouse. */
+.table-scroll {
+  overflow-x: auto;
+  max-inline-size: 100%;
+  margin-block-end: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+.table-scroll > table { margin-block-end: 0; border: none; }
+
+/* Long identifiers, file paths and URLs are everywhere in a
+   specification and must not overflow their container. */
+p, li, td, th, dd { overflow-wrap: anywhere; }
+
+/* Respect a reader who has asked the system to reduce motion. The
+   smooth scrolling declared at the top of this file is exactly the
+   kind of animation that setting is meant to switch off. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Narrow screens: a specification table has many columns and will not
+   fit. Let it keep its natural width and scroll inside its region
+   instead of compressing every column into illegibility. */
+@media (max-width: 640px) {
+  .table-scroll > table { inline-size: max-content; min-inline-size: 100%; }
+  td, th { padding: var(--space-xs) var(--space-sm); }
+  .cover-page { padding: var(--space-lg) 0; }
+}
+
+
+/* --- Suite navigation and index (E9, 2026-11-01) --- */
+
+/* The reader often arrives at one document from a forwarded link, with no idea
+   the other seven exist. This landmark is how they find out. */
+.suite-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-md);
+  align-items: baseline;
+  padding: var(--space-sm) var(--space-md);
+  margin-block-end: var(--space-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: var(--text-sm);
+}
+.suite-nav a { color: var(--color-text); }
+.suite-nav a:hover { color: var(--color-accent); }
+.suite-nav a[aria-current="page"] { font-weight: 600; color: var(--color-primary); }
+
+.suite-index { list-style: none; padding: 0; }
+.suite-index li {
+  padding: var(--space-md);
+  margin-block-end: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+}
+.suite-index a { font-size: var(--text-lg); font-weight: 600; }
+.suite-index .audience { display: block; color: var(--color-text-muted); font-size: var(--text-sm); }
+
+@media print { .suite-nav { display: none; } }

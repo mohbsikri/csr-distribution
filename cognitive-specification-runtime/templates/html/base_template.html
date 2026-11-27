@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="generator" content="Cognitive Specification Runtime {{CSR_VERSION}}">
+  <meta name="workspace" content="{{WORKSPACE_ID}}">
+  <meta name="document-type" content="{{DOCUMENT_TYPE_CODE}}">
+  <title>{{TITLE}} — {{WORKSPACE_ID}}</title>
+  <style>
+/* === THEME VARIABLES (replaced at export time) === */
+{{THEME_CSS}}
+
+/* === BASE STRUCTURAL STYLES (replaced at export time) === */
+{{BASE_CSS}}
+  </style>
+
+  <!-- Mermaid.js — offline copy alongside HTML file -->
+  <script src="mermaid.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var lang = (document.documentElement.lang || 'fr').slice(0, 2);
+      var fr = lang === 'fr';
+
+      // --- Tables: scrollable, announced, reachable (E1) -----------------
+      // Pandoc emits a bare <table> from Markdown, so the accessible wrapper
+      // cannot come from the source document — it is added here. A wide
+      // specification table would otherwise force the whole page to scroll
+      // sideways, and an overflow container with no tabindex cannot be
+      // scrolled without a mouse at all.
+      document.querySelectorAll('table').forEach(function (table, i) {
+        if (table.closest('.table-scroll')) return;
+
+        var caption = table.querySelector('caption');
+        var heading = null;
+        for (var el = table.previousElementSibling; el; el = el.previousElementSibling) {
+          if (/^H[1-6]$/.test(el.tagName)) { heading = el; break; }
+        }
+        var subject = (caption && caption.textContent.trim())
+                   || (heading && heading.textContent.trim())
+                   || (fr ? 'tableau ' + (i + 1) : 'table ' + (i + 1));
+
+        var wrap = document.createElement('div');
+        wrap.className = 'table-scroll';
+        wrap.setAttribute('role', 'region');
+        wrap.setAttribute('tabindex', '0');
+        wrap.setAttribute('aria-label', (fr ? 'Tableau défilant — ' : 'Scrollable table — ') + subject);
+        table.parentNode.insertBefore(wrap, table);
+        wrap.appendChild(table);
+
+        // A header cell without a scope is not associated with its column by
+        // a screen reader, which makes a 9-column specification table unreadable.
+        table.querySelectorAll('thead th').forEach(function (th) {
+          if (!th.hasAttribute('scope')) th.setAttribute('scope', 'col');
+        });
+        table.querySelectorAll('tbody th').forEach(function (th) {
+          if (!th.hasAttribute('scope')) th.setAttribute('scope', 'row');
+        });
+      });
+
+      // --- Table of contents: built from the document, not copied (E2) ---
+      // The TOC in the source Markdown is a literal block the generator copies
+      // from the L3 prompt, so it is only correct by coincidence: it lists the
+      // sections the contract expects, not the ones actually emitted. Omit a
+      // conditional section and the list keeps a dead entry; add one and it is
+      // missing. Rebuilding it here from the headings actually present makes it
+      // correct by construction, and keeps it correct after any later edit.
+      //
+      // A missing TOC in the source is still a generation defect and is still
+      // reported by tools/csr-check. Repairing the deliverable does not excuse
+      // the source: the reader gets a navigable document, the defect stays visible.
+      (function buildToc() {
+        var main = document.getElementById('contenu');
+        if (!main) return;
+
+        var headings = [].slice.call(main.querySelectorAll('h2, h3'))
+          .filter(function (h) { return !h.closest('.toc') && !h.closest('.cover-page'); });
+        if (!headings.length) return;
+
+        var slugged = 0;
+        var list = document.createElement('ol');
+        headings.forEach(function (h) {
+          if (!h.id) {
+            // Pandoc assigns ids from heading text; a heading can still arrive
+            // without one (duplicate text, raw HTML). Give it a stable fallback
+            // so no entry in this list can be a dead link.
+            h.id = 'section-' + (++slugged);
+          }
+          var li = document.createElement('li');
+          if (h.tagName === 'H3') li.className = 'toc-sub';
+          var a = document.createElement('a');
+          a.href = '#' + h.id;
+          a.textContent = h.textContent.trim();
+          li.appendChild(a);
+          list.appendChild(li);
+        });
+
+        var toc = main.querySelector('.toc') || document.querySelector('.toc');
+        if (!toc) return;   // no container: generation omitted it — csr-check reports it
+
+        var title = toc.querySelector('h2');
+        toc.textContent = '';
+        if (title) toc.appendChild(title);
+        toc.setAttribute('role', 'navigation');
+        toc.setAttribute('aria-label', fr ? 'Table des matières' : 'Table of contents');
+        toc.appendChild(list);
+      })();
+
+      // --- Mermaid ------------------------------------------------------
+      // Pandoc 3.x with --syntax-highlighting=none renders ```mermaid as:
+      //   <pre class="mermaid"><code>diagram...</code></pre>
+      // Older pandoc / highlight.js renders as:
+      //   <pre><code class="language-mermaid">diagram...</code></pre>
+      // Both need the <code> wrapper removed so Mermaid receives plain text.
+
+      // Case 1 — pandoc 3.x: <pre class="mermaid"><code>
+      document.querySelectorAll('pre.mermaid > code').forEach(function (code) {
+        code.parentNode.textContent = code.textContent;
+      });
+
+      // Case 2 — highlight.js / older pandoc: <pre><code class="language-mermaid">
+      document.querySelectorAll('pre > code.language-mermaid').forEach(function (code) {
+        var pre = code.parentNode;
+        pre.className = 'mermaid';
+        pre.textContent = code.textContent;
+      });
+
+      // The diagram theme is read from the stylesheet rather than hardcoded:
+      // the theme file owns the palette, and a 'neutral' diagram on a dark
+      // page renders as a white box in the middle of the document.
+      var mermaidTheme = getComputedStyle(document.documentElement)
+        .getPropertyValue('--mermaid-theme').trim().replace(/['"]/g, '') || 'neutral';
+
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: mermaidTheme,
+        securityLevel: 'loose',
+        flowchart: { curve: 'basis', useMaxWidth: true },
+        er: { useMaxWidth: true },
+        sequence: { useMaxWidth: true }
+      });
+      mermaid.run({ nodes: document.querySelectorAll('pre.mermaid') });
+    });
+  </script>
+</head>
+<body>
+
+<a class="skip-link" href="#contenu">{{SKIP_LINK_LABEL}}</a>
+
+{{SUITE_NAV}}
+
+{{DRAFT_BANNER}}
+
+<main id="contenu">
+
+{{CONTENT}}
+
+</main>
+
+</body>
+</html>

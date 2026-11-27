@@ -1,0 +1,15 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "csr-private",
+  "description": "Cognitive Specification Runtime — public distribution. Product 1.0.1, runtime 2.8.21.",
+  "owner": {
+    "name": "mohbsikri"
+  },
+  "plugins": [
+    {
+      "name": "cognitive-specification-runtime",
+      "description": "Cognitive Specification Runtime — transforms fragmented knowledge into validated, maintainable specifications. Repository-first, Markdown-first, human-in-the-loop.",
+      "source": "./cognitive-specification-runtime"
+    }
+  ]
+}
